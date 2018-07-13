@@ -1,0 +1,1 @@
+/usr/bin/c++   -O3 -DNDEBUG   CMakeFiles/stereo.dir/main.cpp.o CMakeFiles/stereo.dir/light_tracking.cpp.o  -o stereo -rdynamic -lopencv_core -lopencv_video -lopencv_highgui -lopencv_imgproc -lwiringPi 
