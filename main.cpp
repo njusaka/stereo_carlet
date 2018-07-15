@@ -15,8 +15,8 @@ void find_Reference_Val_in_Table(float xl, float xr, float *angle, float *distan
 
 int main(void) {
 
-    const bool is_show_image = false;
-    const bool is_show_data  = false;
+    const bool is_show_image = true;
+    const bool is_show_data  = true;
 
     const int img_width_half = 320;
 
@@ -26,9 +26,9 @@ int main(void) {
     if (!cap.isOpened())
         return -1;
 
-    unsigned char iLowR = 180, iHighR = 255;        // 180, 255 200,155
-    unsigned char iLowG = 50,   iHighG = 255;       // 50, 255   0,255   5, 255
-    unsigned char iLowB = 50,   iHighB = 255;       // 50, 255  0,255    0, 255
+    unsigned char iLowR = 220, iHighR = 255;        // 180, 255 200,155
+    unsigned char iLowG = 5,   iHighG = 255;       // 50, 255   0,255   5, 255
+    unsigned char iLowB = 0,   iHighB = 255;       // 50, 255  0,255    0, 255
     __light_tracking _t(iLowR, iHighR,
                         iLowG, iHighG,
                         iLowB, iHighB);
@@ -52,6 +52,15 @@ int main(void) {
 
         cap >> img_stereo_raw;
         //resize(img_stereo_raw, img_stereo_raw, Size(960, 360), 0, 0, INTER_NEAREST);  // 960, 360
+
+
+	Mat imageRGB[3];
+	split(img_stereo_raw, imageRGB);
+	for (int i = 0; i < 3; i++)
+	{
+		equalizeHist(imageRGB[i], imageRGB[i]);
+	}
+	merge(imageRGB, 3, img_stereo_raw);
 
         _t.update(img_stereo_raw, is_show_image);
         temp = _t.get_CenterPts();
